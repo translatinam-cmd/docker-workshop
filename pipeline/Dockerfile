@@ -11,10 +11,12 @@ COPY "pyproject.toml" "uv.lock" ".python-version" ./
 RUN uv sync --locked
 
 WORKDIR /app
+# Add virtual environment to PATH so we can use installed packages
+ENV PATH="/app/.venv/bin:$PATH"
 
 ## RUN pip install pandas pyarrow
 
-#COPY main.py pipeline.py ./
+COPY main.py pipeline.py ./
 
-#ENTRYPOINT ["python", "pipeline.py"]
-#CMD ["1"]
+ENTRYPOINT ["python", "pipeline.py"]
+CMD ["1"]
